@@ -1,24 +1,29 @@
 PImage sdm1;
 int x;
 int y;
-solg sold1 = new solg(50,50);
+int floor=800;
+int spawn=250;
+solg sold1 = new solg(spawn,floor);
+
 
 void setup() {
   fullScreen();
   sdm1 = loadImage("dep1.png");
+  sdm1 = resize(400,200);
+
   
 }
 
 void draw() {
   background(255,255,255);
-  solg.display();
+  sold1.marche();
 
   
 }
 
 
 class solg {
-int x;
+float x;
 int y;
   
   solg(int nouvX, int nouvY) {
@@ -27,9 +32,10 @@ int y;
     
     
 }
-  void display() {
-    fill(255);
-    ellipse(x, y, 40, 40);
+  void marche() {
+    image(sdm1,x,y);
+    x=x+1;
+    
   }
 
 
