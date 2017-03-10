@@ -7,6 +7,7 @@ int x;
 int y;
 int floor=700;
 int spawn=250;
+
 solg sold1 = new solg(spawn,floor);
 
 
@@ -20,6 +21,7 @@ void setup() {
   sdm3.resize(400,200);
 
   
+  
 }
 
 
@@ -29,17 +31,30 @@ void setup() {
 
 void draw() {
   background(255,255,255);
+  cerveau();
+  fill(0);
+  rect(1000,600,300,300);
+  
+ 
   
   
-  
-  sold1.marche();
 
   
 }
 
 
+void cerveau() {
+ if(sold1.d==true){
+  sold1.combat();
+ } else {
+ sold1.marche();
+ }
+ 
+}
+
+
 class solg {
-float x;
+int x;
 int y;
 int i=0;
 int f=1;
@@ -47,6 +62,10 @@ int life;
 int armor;
 int as;
 int dmg;
+color noir= color(0,0,0);
+color detect;
+
+boolean d;
 
  
   solg(int nouvX, int nouvY) {
@@ -155,10 +174,12 @@ int dmg;
     
     
     x=x+1;    //déplacement
-    
+    detect = get(x+100,y);    //système de détection
+    if(detect==noir){
+      d=true;
+    } else {
+      d=false;
+    }
     
   }
-
-
-
-}
+  }
