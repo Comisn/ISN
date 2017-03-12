@@ -1,14 +1,16 @@
 PImage sdm1;
 PImage sdm2;
 PImage sdm3;
-
+int[] positionsg=new int[50];
+int[] positionsd=new int[50];
 
 int x;
 int y;
 int floor=700;
 int spawn=250;
-
+int z;
 solg sold1 = new solg(spawn,floor);
+
 
 
 void setup() {
@@ -19,6 +21,9 @@ void setup() {
   sdm1.resize(400,200);
   sdm2.resize(400,200);
   sdm3.resize(400,200);
+  positionsd[1]=1000;
+
+
 
   
   
@@ -32,8 +37,9 @@ void setup() {
 void draw() {
   background(255,255,255);
   cerveau();
+
   fill(0);
-  rect(1000,600,300,300);
+  rect(1200,0,300,1000);
   
  
   
@@ -44,13 +50,16 @@ void draw() {
 
 
 void cerveau() {
- if(sold1.d==true){
+ if(positionsd[1]==sold1.x){
   sold1.combat();
+ } else if(positionsg[1]==sold1.x-50){
+ sold1.attend();
  } else {
  sold1.marche();
  }
- 
 }
+
+
 
 
 class solg {
@@ -62,15 +71,16 @@ int life;
 int armor;
 int as;
 int dmg;
-color noir= color(0,0,0);
-color detect;
+color c=color(255,200,10);
+int nbr;
 
-boolean d;
+
 
  
   solg(int nouvX, int nouvY) {
     x= nouvX;
     y=nouvY;
+    nbr=nbr+1;
     
     
 }
@@ -147,7 +157,9 @@ boolean d;
   
   
   void marche() {
-    
+    x=x+1;    //déplacement
+    positionsg[nbr] = x;
+
     
     if(f==1){              //système d'animation d'image
     image(sdm1,x,y);
@@ -170,16 +182,11 @@ boolean d;
       f=1;
       }
     }
+  }
+  void attend() {
     
-    
-    
-    x=x+1;    //déplacement
-    detect = get(x+100,y);    //système de détection
-    if(detect==noir){
-      d=true;
-    } else {
-      d=false;
+      image(sdm1,x,y); 
+      
     }
-    
-  }
-  }
+
+}
