@@ -13,13 +13,19 @@ PImage comb2;
 PImage comb3;
 
 
-int[] positionsg=new int[50]; //tableau afin de repérer les positions
+int[] positionsg=new int[50];
 int[] positionsd=new int[50];
 
 int dgtg;
 int dgtd;
 
+boolean soldbrain1g = false;
+boolean soldbrain1d = false;
+boolean soldbrain2g = false;
+boolean soldbrain2d = false;
 
+int nbrg;
+int nbrd;
 int x;
 int y;
 int floor=500;
@@ -28,8 +34,10 @@ int spawnd=900;
 int z;
 solg sold1 = new solg(spawng,floor);
 sold sol1 = new sold(spawnd,floor);
-
-
+solg sold2 = new solg(spawng,floor);
+sold sol2 = new sold(spawnd,floor);
+solg sold3 = new solg(spawng,floor);
+sold sol3 = new sold(spawnd,floor);
 
 void setup() {
   
@@ -64,15 +72,33 @@ void setup() {
 
 void draw() {
   background(255,255,255);
-  sold1.cerveau();
-  sol1.cerveau();
   fill(0);
   text(sold1.life, 10, 100);
   text(sol1.life, 100, 100);
-
-  
- 
-  
+  if(mouseButton == LEFT) { //invoquer le soldats avec la souris
+   soldbrain1g = true;
+  }
+  if(soldbrain1g == true) {
+    sold1.cerveau();
+  }
+   if(mouseButton == RIGHT) {
+   soldbrain1d = true;
+  }
+  if(soldbrain1d == true) {
+    sol1.cerveau();
+  }
+   if(mouseButton == LEFT) { //invoquer le soldats avec la souris
+   soldbrain2g = true;
+  }
+  if(soldbrain2g == true) {
+    sold2.cerveau();
+  }
+   if(mouseButton == RIGHT) {
+   soldbrain2d = true;
+  }
+  if(soldbrain2d == true) {
+    sol2.cerveau();
+  }
   
 
   
@@ -97,8 +123,8 @@ int armor;    //armure
 int as;    //attaque speed
 int dmg;
 color c=color(255,200,10);
-int nbr;
-int dgtg;    //variable pour les dégats exportés 
+int nbrg;
+int dgtg;    //variable pour les dégats exportés xD
 boolean vie=true;
 
 
@@ -107,25 +133,25 @@ boolean vie=true;
   solg(int nouvX, int nouvY) {
     x= nouvX;
     y=nouvY;
-    nbr=nbr+1;
+    nbrg=nbrg+1;
     dmg=10;    //caractéristiques
     life=50;
     armor=5;
     
     
 }
-  void cerveau() {
-   if(sold1.vie){
-   if(positionsd[1]==sold1.x+50){
-    sold1.combat();
-   } else if(positionsg[1]==sold1.x-50){
-   sold1.attend();
+  void cerveau() { //moteur qui relit les différentes actions de l'unité de gauche
+   if(vie){
+   if(positionsd[1]==x+50){
+    combat();
+   } else if(positionsg[1]==x-50){
+   attend();
    } else {
-   sold1.marche();
+   marche();
    }
-   if(sold1.life<=0) {
-   sol1.mort();
-   sold1.vie=false;
+   if(life<=0) {
+   mort();
+   vie=false;
    }
    }
   }
@@ -178,7 +204,7 @@ boolean vie=true;
   
   void marche() {    //action de déplacement
     x=x+1;    //déplacement
-    positionsg[nbr] = x;    //attribution de sa position au tableau pour qu'il puisse être détecté
+    positionsg[nbrg] = x;    //attribution de sa position au tableau pour qu'il puisse être détecté
 
     
     if(f==1){              //système d'animation d'image
@@ -234,7 +260,7 @@ int armor;    //armor
 int as;
 int dmg;
 color c=color(255,200,10);
-int nbr;
+int nbrd;
 int dgtd;
 boolean vie=true;
 
@@ -244,7 +270,7 @@ boolean vie=true;
   sold(int nouvX, int nouvY) {
     x= nouvX;
     y=nouvY;
-    nbr=nbr+1;
+    nbrd=nbrd+1;
     dmg=10;    //initialisation des caractéristiques
     life=50;
     armor=5;
@@ -253,18 +279,18 @@ boolean vie=true;
     
 }
 
-  void cerveau() {    //moteur qui relie les différentes actions de l'unité
-   if(sol1.vie){
-   if(positionsg[1]==sol1.x-50){
-    sol1.combat();
-   } else if(positionsd[1]==sol1.x-50){
-   sol1.attend();
+  void cerveau() {    //moteur qui relie les différentes actions de l'unité de droite
+   if(vie){
+   if(positionsg[1]==x-50){
+    combat();
+   } else if(positionsd[1]==x-50){
+   attend();
    } else {
-   sol1.marche();
+   marche();
    }
-   if(sol1.life<=0) {
-   sol1.mort();
-   sol1.vie=false;
+   if(life<=0) {
+   mort();
+   vie=false;
    }
    }
  
@@ -315,7 +341,7 @@ boolean vie=true;
   
   void marche() {    //déplacement
     x=x-1;    
-    positionsd[nbr] = x;    //attribution de sa position au tableau pour qu'il puisse être détecté
+    positionsd[nbrd] = x;    //attribution de sa position au tableau pour qu'il puisse être détecté
 
     
     if(f==1){              //système d'animation d'image
