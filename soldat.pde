@@ -1,6 +1,18 @@
-PImage sdm1;
+PImage sdm1;    //tout les PImage c'est les sprites
 PImage sdm2;
 PImage sdm3;
+PImage sdm4;
+PImage sdm1g;    //tout les PImage c'est les sprites
+PImage sdm2g;
+PImage sdm3g;
+PImage sdm4g;
+PImage sdstop;
+PImage sdstopg;
+PImage comb1;
+PImage comb2;
+PImage comb3;
+
+
 int[] positionsg=new int[50];
 int[] positionsd=new int[50];
 
@@ -20,13 +32,24 @@ sold sol1 = new sold(spawnd,floor);
 
 
 void setup() {
+  
+  
   fullScreen();
-  sdm1 = loadImage("dep1.png");
+  sdm1 = loadImage("dep1.png");    //importation des sprites
   sdm2 = loadImage("dep2.png");
   sdm3 = loadImage("dep3.png");
-  sdm1.resize(400,200);
-  sdm2.resize(400,200);
-  sdm3.resize(400,200);
+  sdm4 = loadImage("dep4.png");
+  sdm1g = loadImage("dep1g.png");    //importation des sprites
+  sdm2g = loadImage("dep2g.png");
+  sdm3g = loadImage("dep3g.png");
+  sdm4g = loadImage("dep4g.png");
+  sdstop = loadImage("stop.png");
+  sdstopg = loadImage("stopg.png");
+  comb1 = loadImage("comb1.png");
+  comb2 = loadImage("comb2.png");
+  comb3 = loadImage("comb3.png");
+  
+
 
 
 
@@ -124,30 +147,33 @@ boolean vie=true;
   
   void combat() {    //action de combat
       if(f==1){              //système d'animation d'image
-    image(sdm1,x,y);
+    image(comb1,x,y);
     }
     if(f==2){
-    image(sdm2,x,y);
+    image(comb2,x,y);
     
     }
     if(f==3){
-    image(sdm3,x,y);
-    
+    image(comb3,x,y);
     
     }
+    if(f==4){
+    image(comb2,x,y);
     
+    }
+
     
-    if(i<15){
+    if(i<15){    //i c'est la vitesse de déroulement des images 
     i=i+1;
     } else {
     i=0;
-      if(f<3){
+      if(f<4){    //f c'est le nombre total d'images de l'animation
       f=f+1;
       } else {
       f=1;
       }
     }
-    if(i==15){    //attaque
+    if(f==4&&i==1){    //attaque
     dgtg=dgtg+dmg;  
     }  else {
     dgtg=0;
@@ -171,13 +197,16 @@ boolean vie=true;
 
     
     if(f==1){              //système d'animation d'image
-    image(sdm1,x,y);
+    image(sdm1g,x,y);
     }
     if(f==2){
-    image(sdm2,x,y);
+    image(sdm2g,x,y);
     }
     if(f==3){
-    image(sdm3,x,y);
+    image(sdm3g,x,y);
+    }
+    if(f==4){
+    image(sdm4g,x,y);
     }
     
     
@@ -185,7 +214,7 @@ boolean vie=true;
     i=i+1;
     } else {
     i=0;
-      if(f<3){
+      if(f<4){
       f=f+1;
       } else {
       f=1;
@@ -198,7 +227,7 @@ boolean vie=true;
   
   void attend() {
     
-      image(sdm1,x,y); 
+  image(sdstop,x,y); 
       
     }
   void mort() {
@@ -242,26 +271,34 @@ boolean vie=true;
   
   void combat() {    //combats
     if(f==1){              //système d'animation d'image
-    image(sdm1,x,y);
+    image(comb1,x,y);
     }
     if(f==2){
-    image(sdm2,x,y);
+    image(comb2,x,y);
+    
     }
     if(f==3){
-    image(sdm3,x,y);
+    image(comb3,x,y);
+    
     }
+    if(f==4){
+    image(comb2,x,y);
+    
+    }
+
+    
     if(i<15){
     i=i+1;
     } else {
     i=0;
-      if(f<3){
+      if(f<4){
       f=f+1;
       } else {
       f=1;
       }
     }
     
-    if(i==15){    //attaque
+    if(f==4&&i==1){    //attaque
     dgtd=dgtd+dmg;  
     }  else {
     dgtd=0;
@@ -290,13 +327,16 @@ boolean vie=true;
     if(f==3){
     image(sdm3,x,y);
     }
+    if(f==4){
+    image(sdm4,x,y);
+    }
     
     
     if(i<15){
     i=i+1;
     } else {
     i=0;
-      if(f<3){
+      if(f<4){
       f=f+1;
       } else {
       f=1;
@@ -308,7 +348,7 @@ boolean vie=true;
   }
   void attend() {
     
-      image(sdm1,x,y); 
+    image(sdstop,x,y); 
       
     }
   void mort() {
