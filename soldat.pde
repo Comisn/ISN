@@ -22,9 +22,9 @@ int dgtd;
 
 int x;
 int y;
-int floor=700;
-int spawng=250;
-int spawnd=800;
+int floor=500;
+int spawng=150;
+int spawnd=900;
 int z;
 solg sold1 = new solg(spawng,floor);
 sold sol1 = new sold(spawnd,floor);
@@ -34,7 +34,7 @@ sold sol1 = new sold(spawnd,floor);
 void setup() {
   
   
-  fullScreen();
+  size(1500, 1000);
   sdm1 = loadImage("dep1.png");    //importation des sprites
   sdm2 = loadImage("dep2.png");
   sdm3 = loadImage("dep3.png");
@@ -64,8 +64,8 @@ void setup() {
 
 void draw() {
   background(255,255,255);
-  cerveaug();
-  cerveaud();
+  sold1.cerveau();
+  sol1.cerveau();
   fill(0);
   text(sold1.life, 10, 100);
   text(sol1.life, 100, 100);
@@ -79,38 +79,9 @@ void draw() {
 }
 
 
-void cerveaug() {    //moteur qui relie les différentes actions de l'unité
- if(sold1.vie){
- if(positionsd[1]==sold1.x+50){
-  sold1.combat();
- } else if(positionsg[1]==sold1.x-50){
- sold1.attend();
- } else {
- sold1.marche();
- }
- if(sold1.life<=0) {
- sol1.mort();
- sold1.vie=false;
- }
- }
-}
 
-void cerveaud() {    //moteur qui relie les différentes actions de l'unité
- if(sol1.vie){
- if(positionsg[1]==sol1.x-50){
-  sol1.combat();
- } else if(positionsd[1]==sol1.x-50){
- sol1.attend();
- } else {
- sol1.marche();
- }
- if(sol1.life<=0) {
- sol1.mort();
- sol1.vie=false;
- }
- }
- 
-}
+
+
 
 
 
@@ -143,7 +114,21 @@ boolean vie=true;
     
     
 }
-
+  void cerveau() {
+   if(sold1.vie){
+   if(positionsd[1]==sold1.x+50){
+    sold1.combat();
+   } else if(positionsg[1]==sold1.x-50){
+   sold1.attend();
+   } else {
+   sold1.marche();
+   }
+   if(sold1.life<=0) {
+   sol1.mort();
+   sold1.vie=false;
+   }
+   }
+  }
   
   void combat() {    //action de combat
       if(f==1){              //système d'animation d'image
@@ -210,7 +195,7 @@ boolean vie=true;
     }
     
     
-    if(i<15){
+    if(i<13){
     i=i+1;
     } else {
     i=0;
@@ -268,7 +253,22 @@ boolean vie=true;
     
 }
 
-  
+  void cerveau() {    //moteur qui relie les différentes actions de l'unité
+   if(sol1.vie){
+   if(positionsg[1]==sol1.x-50){
+    sol1.combat();
+   } else if(positionsd[1]==sol1.x-50){
+   sol1.attend();
+   } else {
+   sol1.marche();
+   }
+   if(sol1.life<=0) {
+   sol1.mort();
+   sol1.vie=false;
+   }
+   }
+ 
+}  
   void combat() {    //combats
     if(f==1){              //système d'animation d'image
     image(comb1,x,y);
@@ -332,7 +332,7 @@ boolean vie=true;
     }
     
     
-    if(i<15){
+    if(i<13){
     i=i+1;
     } else {
     i=0;
