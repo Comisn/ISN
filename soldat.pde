@@ -13,7 +13,7 @@ PImage comb2;
 PImage comb3;
 
 
-int[] positionsg=new int[50];
+int[] positionsg=new int[50]; //tableau afin de repérer les positions
 int[] positionsd=new int[50];
 
 int dgtg;
@@ -98,7 +98,7 @@ int as;    //attaque speed
 int dmg;
 color c=color(255,200,10);
 int nbr;
-int dgtg;    //variable pour les dégats exportés xD
+int dgtg;    //variable pour les dégats exportés 
 boolean vie=true;
 
 
