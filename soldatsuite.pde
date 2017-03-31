@@ -17,6 +17,8 @@ PImage combg2;
 PImage combg3;
 PImage combg4;
 
+String p1;  
+
 
 
 int[] positionsg=new int[50];
@@ -38,8 +40,9 @@ int floor=500;
 int spawng=150;
 int spawnd=900;
 int z;
-sold1 sold1 = new sold1(spawng,floor);
-sol1 sol1 = new sol1(spawnd,floor);
+
+sol1 sol1 = new sol1(spawnd,floor,20,60,5,1);
+sold1 sold1 = new sold1(spawng,floor,10,60,5,1);
 
 
 void setup() {
@@ -83,6 +86,10 @@ void draw() {
   fill(0);
   text(sold1.life, 10, 100);
   text(sol1.life, 700, 100);
+  
+  
+  
+  
   if(mouseButton == LEFT) { //invoquer le soldats avec la souris
    soldbrain1g = true;
   }
@@ -96,6 +103,11 @@ void draw() {
   if(soldbrain1d == true) {
     sol1.cerveau();
   }
+  
+  
+  
+  
+
   
   
 }
@@ -126,13 +138,14 @@ boolean vie=true;
 
 
  
-  sold1(int nouvX, int nouvY) {
+  sold1(int nouvX, int nouvY, int nouvdmg, int nouvlife, int nouvarmor, int nouvas) {
     x= nouvX;
     y=nouvY;
     nbrg=nbrg+1;
-    dmg=10;    //caractéristiques
-    life=50;
-    armor=5;
+    dmg=nouvdmg;    //caractéristiques
+    life=nouvlife;
+    armor=nouvarmor;
+    as=nouvas;
     
     
 }
@@ -157,7 +170,10 @@ boolean vie=true;
   }
   
   void combat() {    //action de combat
-      if(f==1){              //système d'animation d'image
+    if(f<1){
+    image(sdstop,x,y);  
+    }
+    if(f==1){              //système d'animation d'image
     image(comb1,x,y);
     }
     if(f==2){
@@ -174,18 +190,19 @@ boolean vie=true;
     }
 
     
-    if(i<15){    //i c'est la vitesse de déroulement des images 
+    if(i<15){
     i=i+1;
     } else {
     i=0;
-      if(f<4){    //f c'est le nombre total d'images de l'animation
+      if(f<4){
       f=f+1;
       } else {
-      f=1;
+      f=int(random(1,10))*-1;
+      
       }
     }
     if(f==4&&i==1){    //attaque
-    dgtg=dgtg+dmg;  
+    dgtg=dgtg+dmg+int(random(dmg/2*-1,dmg/2));  
     }  else {
     dgtg=0;
     }
@@ -259,6 +276,7 @@ int life;    //vie
 int armor;    //armor
 int as;
 int dmg;
+int atk;
 color c=color(255,200,10);
 int nbrd;
 int dgtd;
@@ -267,14 +285,14 @@ boolean vie=true;
 
 
  
-  sol1(int nouvX, int nouvY) {
+  sol1(int nouvX, int nouvY, int nouvdmg, int nouvlife, int nouvarmor, int nouvas) {
     x= nouvX;
     y=nouvY;
     nbrd=nbrd+1;
-    dmg=10;    //initialisation des caractéristiques
-    life=50;
-    armor=5;
-    
+    dmg=nouvdmg;    //caractéristiques
+    life=nouvlife;
+    armor=nouvarmor;
+    as=nouvas;
     
     
 }
@@ -300,6 +318,11 @@ boolean vie=true;
  
 }  
   void combat() {    //combats
+
+    
+    if(f<1){
+    image(sdstop,x,y);  
+    }
     if(f==1){              //système d'animation d'image
     image(comb1,x,y);
     }
@@ -324,12 +347,14 @@ boolean vie=true;
       if(f<4){
       f=f+1;
       } else {
-      f=1;
+      f=int(random(1,10))*-1;
+      
       }
     }
     
+    
     if(f==4&&i==1){    //attaque
-    dgtd=dgtd+dmg;  
+    dgtd=dgtd+dmg+int(random(dmg/2*-1,dmg/2));  
     }  else {
     dgtd=0;
     }
