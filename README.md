@@ -1,5 +1,5 @@
 Antonin:
-Une interface à 6 boutons.
+Une interface à 12 boutons de 2 colonnes de 3 boutons.
 
 Côme: 
 Moteur des soldats.
