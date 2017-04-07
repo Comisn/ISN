@@ -17,7 +17,8 @@ PImage combg2;
 PImage combg3;
 PImage combg4;
 
-String p1;  
+String classeg;
+String classed;
 
 
 
@@ -41,8 +42,8 @@ int spawng=150;
 int spawnd=900;
 int z;
 
-sol1 sol1 = new sol1(spawnd,floor,20,60,5,1);
-sold1 sold1 = new sold1(spawng,floor,10,60,5,1);
+sol1 sol1 = new sol1(spawnd,floor,25,150,7,15,5);    //création des objets sans caractéristiques:  dmg,life,armor,as,lifesteal
+sold1 sold1 = new sold1(spawng,floor,25,150,7,15,0);
 
 
 void setup() {
@@ -88,6 +89,8 @@ void draw() {
   text(sol1.life, 700, 100);
   
   
+
+  
   
   
   if(mouseButton == LEFT) { //invoquer le soldats avec la souris
@@ -130,15 +133,18 @@ int life;
 int armor;    //armure
 int as;    //attaque speed
 int dmg;
+int ls;
 color c=color(255,200,10);
 int nbrg;
 int dgtg;    //variable pour les dégats exportés xD
 boolean vie=true;
+boolean barb=false;
+boolean regen=false;
 
 
 
  
-  sold1(int nouvX, int nouvY, int nouvdmg, int nouvlife, int nouvarmor, int nouvas) {
+  sold1(int nouvX, int nouvY, int nouvdmg, int nouvlife, int nouvarmor, int nouvas, int nouvls) {    //on permet d'entrer les différentes variables lors de la création de l'objet
     x= nouvX;
     y=nouvY;
     nbrg=nbrg+1;
@@ -146,6 +152,7 @@ boolean vie=true;
     life=nouvlife;
     armor=nouvarmor;
     as=nouvas;
+    ls=nouvls;
     
     
 }
@@ -170,6 +177,13 @@ boolean vie=true;
   }
   
   void combat() {    //action de combat
+    if (barb) {      //effet barbare: as augmente quand + de dmg
+    as=15-(life/20);  
+    }
+    if (regen&&i==1) {      //effet démon: regen de vie
+    life=life+2;  
+    }
+    
     if(f<1){
     image(sdstop,x,y);  
     }
@@ -190,7 +204,7 @@ boolean vie=true;
     }
 
     
-    if(i<15){
+    if(i<as){
     i=i+1;
     } else {
     i=0;
@@ -202,7 +216,8 @@ boolean vie=true;
       }
     }
     if(f==4&&i==1){    //attaque
-    dgtg=dgtg+dmg+int(random(dmg/2*-1,dmg/2));  
+    dgtg=dmg+int(random(dmg/2*-1,dmg/2));  
+    life=life+ls;
     }  else {
     dgtg=0;
     }
@@ -276,16 +291,19 @@ int life;    //vie
 int armor;    //armor
 int as;
 int dmg;
+int ls;
 int atk;
 color c=color(255,200,10);
 int nbrd;
 int dgtd;
 boolean vie=true;
+boolean barb=false;
+boolean regen=false;
 
 
 
  
-  sol1(int nouvX, int nouvY, int nouvdmg, int nouvlife, int nouvarmor, int nouvas) {
+  sol1(int nouvX, int nouvY, int nouvdmg, int nouvlife, int nouvarmor, int nouvas, int nouvls) {
     x= nouvX;
     y=nouvY;
     nbrd=nbrd+1;
@@ -293,6 +311,7 @@ boolean vie=true;
     life=nouvlife;
     armor=nouvarmor;
     as=nouvas;
+    ls=nouvls;
     
     
 }
@@ -318,7 +337,12 @@ boolean vie=true;
  
 }  
   void combat() {    //combats
-
+    if (barb) {      //effet barbare: as augmente quand + de dmg
+    as=15-((150-life)/20);  
+    }
+    if (regen&&i==1) {      //effet démon: regen de vie
+    life=life+2;  
+    }
     
     if(f<1){
     image(sdstop,x,y);  
@@ -340,7 +364,7 @@ boolean vie=true;
     }
 
     
-    if(i<15){
+    if(i<as){
     i=i+1;
     } else {
     i=0;
@@ -354,7 +378,8 @@ boolean vie=true;
     
     
     if(f==4&&i==1){    //attaque
-    dgtd=dgtd+dmg+int(random(dmg/2*-1,dmg/2));  
+    dgtd=dmg+int(random(dmg/2*-1,dmg/2));  
+    life=life+ls;
     }  else {
     dgtd=0;
     }
@@ -410,5 +435,42 @@ boolean vie=true;
     fill(255,0,0);
     ellipse(x,y,26,26);
     
+  }
+}
+
+void choixg() {    //fonction de choix et d'association des caractéristiques aux différents personnages
+  if (classeg == "Croisé") {
+    sol1 = new sol1(spawnd,floor,26,120,7,15,0);  
+    //ajouter burst et achèvement
+  }
+  if (classeg == "Shaco") {
+    
+  }
+  if (classeg == "Barbare") {
+    sol1 = new sol1(spawnd,floor,26,120,7,15,7);
+    sol1.barb = true;
+  }
+  if (classeg == "Myrmidon") {
+    
+  }
+  if (classeg == "Spartiate") {
+    sol1 = new sol1(spawnd,floor,30,140,8,14,0);
+    //ajouter un shield
+  }
+  if (classeg == "Paladin") {
+    sol1 = new sol1(spawnd,floor,25,150,15,15,0);
+    
+  }
+  if (classeg == "Démon") {
+    sol1 = new sol1(spawnd,floor,24,200,9,15,0);
+    sol1.regen = true;
+    
+  }
+  if (classeg == "SwordMaster") {
+    sol1 = new sol1(spawnd,floor,32,100,5,14,12);
+    
+  }
+  if (classeg == "Assassin") {
+    sol1 = new sol1(spawnd,floor,42,100,5,13,0);
   }
 }
