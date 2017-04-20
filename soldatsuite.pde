@@ -1,21 +1,24 @@
-PImage sdm1;    //tout les PImage c'est les sprites
-PImage sdm2;
-PImage sdm3;
-PImage sdm4;
-PImage sdm1g;    //tout les PImage c'est les sprites
-PImage sdm2g;
-PImage sdm3g;
-PImage sdm4g;
-PImage sdstop;
-PImage sdstopg;
-PImage comb1;
+// TOUT les PImage corresponde à l'importation d'images: ici les sprites des personnages
+PImage comb1;    //skin croisé   combat
 PImage comb2;
 PImage comb3;
 PImage comb4;
+PImage comb5;
 PImage combg1;
 PImage combg2;
 PImage combg3;
 PImage combg4;
+PImage combg5;
+PImage depcroise1;    //skin croisé deplacements0
+PImage depcroise2;
+PImage depcroise3;
+PImage depcroise4;
+PImage depcroiseg1;   
+PImage depcroiseg2;
+PImage depcroiseg3;
+PImage depcroiseg4;
+PImage croisestop;    //skin croisé quand il bouge pas
+PImage croisestopg;
 
 String classeg;
 String classed;
@@ -50,24 +53,28 @@ void setup() {
   
   
   size(1400, 800);
-  sdm1 = loadImage("dep1.png");    //importation des sprites
-  sdm2 = loadImage("dep2.png");
-  sdm3 = loadImage("dep3.png");
-  sdm4 = loadImage("dep4.png");
-  sdm1g = loadImage("dep1g.png");    //importation des sprites
-  sdm2g = loadImage("dep2g.png");
-  sdm3g = loadImage("dep3g.png");
-  sdm4g = loadImage("dep4g.png");
-  sdstop = loadImage("stop.png");
-  sdstopg = loadImage("stopg.png");
+
+  depcroise1 = loadImage("depcroisé1.png");  //Ici on associes les différents sprites importés plus haut à des variables d'images
+  depcroise2 = loadImage("depcroisé2.png");
+  depcroise3 = loadImage("depcroisé3.png");
+  depcroise4 = loadImage("depcroisé4.png");
+  depcroiseg1 = loadImage("depcroiség1.png");  
+  depcroiseg2 = loadImage("depcroiség2.png");
+  depcroiseg3 = loadImage("depcroiség3.png");
+  depcroiseg4 = loadImage("depcroiség4.png");
   comb1 = loadImage("comb1.png");
   comb2 = loadImage("comb2.png");
   comb3 = loadImage("comb3.png");
-  comb4 = loadImage("comb3.png");
+  comb4 = loadImage("comb4.png");
+  comb5 = loadImage("comb5.png");
+  combg1 = loadImage("combg1.png");
   combg2 = loadImage("combg2.png");
   combg3 = loadImage("combg3.png");
-  combg4 = loadImage("combg3.png");
-  
+  combg4 = loadImage("combg4.png");
+  combg5 = loadImage("combg5.png");
+  croisestop = loadImage("croiséstop.png");
+  croisestopg = loadImage("croiséstopg.png");
+
   
 
 
@@ -185,21 +192,25 @@ boolean regen=false;
     }
     
     if(f<1){
-    image(sdstop,x,y);  
+    image(croisestopg,x,y);  
     }
     if(f==1){              //système d'animation d'image
-    image(comb1,x,y);
+    image(combg1,x,y);
     }
     if(f==2){
-    image(comb2,x,y);
+    image(combg2,x,y);
     
     }
     if(f==3){
-    image(comb3,x,y);
+    image(combg3,x,y);
     
     }
     if(f==4){
-    image(comb2,x,y);
+    image(combg4,x,y);
+    
+    }
+    if(f==5){
+    image(combg5,x,y);
     
     }
 
@@ -208,14 +219,14 @@ boolean regen=false;
     i=i+1;
     } else {
     i=0;
-      if(f<4){
+      if(f<5){
       f=f+1;
       } else {
       f=int(random(1,10))*-1;
       
       }
     }
-    if(f==4&&i==1){    //attaque
+    if(f==5&&i==1){    //attaque
     dgtg=dmg+int(random(dmg/2*-1,dmg/2));  
     life=life+ls;
     }  else {
@@ -240,16 +251,16 @@ boolean regen=false;
 
     
     if(f==1){              //système d'animation d'image
-    image(sdm1g,x,y);
+    image(depcroiseg1,x,y);
     }
     if(f==2){
-    image(sdm2g,x,y);
+    image(depcroiseg2,x,y);
     }
     if(f==3){
-    image(sdm3g,x,y);
+    image(depcroiseg3,x,y);
     }
     if(f==4){
-    image(sdm4g,x,y);
+    image(depcroiseg4,x,y);
     }
     
     
@@ -270,7 +281,7 @@ boolean regen=false;
   
   void attend() {
     
-  image(sdstop,x,y); 
+  image(croisestopg,x,y); 
       
     }
   void mort() {
@@ -345,7 +356,7 @@ boolean regen=false;
     }
     
     if(f<1){
-    image(sdstop,x,y);  
+    image(croisestop,x,y);  
     }
     if(f==1){              //système d'animation d'image
     image(comb1,x,y);
@@ -359,7 +370,11 @@ boolean regen=false;
     
     }
     if(f==4){
-    image(comb2,x,y);
+    image(comb4,x,y);
+    
+    }
+    if(f==5){
+    image(comb5,x,y);
     
     }
 
@@ -368,7 +383,7 @@ boolean regen=false;
     i=i+1;
     } else {
     i=0;
-      if(f<4){
+      if(f<5){
       f=f+1;
       } else {
       f=int(random(1,10))*-1;
@@ -377,7 +392,7 @@ boolean regen=false;
     }
     
     
-    if(f==4&&i==1){    //attaque
+    if(f==5&&i==1){    //attaque
     dgtd=dmg+int(random(dmg/2*-1,dmg/2));  
     life=life+ls;
     }  else {
@@ -399,16 +414,16 @@ boolean regen=false;
 
     
     if(f==1){              //système d'animation d'image
-    image(sdm1,x,y);
+    image(depcroise1,x,y);
     }
     if(f==2){
-    image(sdm2,x,y);
+    image(depcroise2,x,y);
     }
     if(f==3){
-    image(sdm3,x,y);
+    image(depcroise3,x,y);
     }
     if(f==4){
-    image(sdm4,x,y);
+    image(depcroise4,x,y);
     }
     
     
@@ -428,7 +443,7 @@ boolean regen=false;
   }
   void attend() {
     
-    image(sdstop,x,y); 
+    image(croisestop,x,y); 
       
     }
   void mort() {
