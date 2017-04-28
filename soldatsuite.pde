@@ -36,13 +36,14 @@ boolean soldbrain1d = false;
 boolean soldbrain2g = false;
 boolean soldbrain2d = false;
 
-int nbrg;
+float drawWidth;
+float drawWidth2;
 int nbrd;
 int x;
 int y;
-int floor=500;
-int spawng=150;
-int spawnd=900;
+int floor=400;
+int spawng=50;
+int spawnd=950;
 int z;
 
 sol1 sol1 = new sol1(spawnd,floor,25,150,7,15,5);    //création des objets sans caractéristiques:  dmg,life,armor,as,lifesteal
@@ -54,14 +55,14 @@ void setup() {
   
   size(1400, 800);
 
-  depcroise1 = loadImage("depcroisé1.png");  //Ici on associes les différents sprites importés plus haut à des variables d'images
-  depcroise2 = loadImage("depcroisé2.png");
-  depcroise3 = loadImage("depcroisé3.png");
-  depcroise4 = loadImage("depcroisé4.png");
-  depcroiseg1 = loadImage("depcroiség1.png");  
-  depcroiseg2 = loadImage("depcroiség2.png");
-  depcroiseg3 = loadImage("depcroiség3.png");
-  depcroiseg4 = loadImage("depcroiség4.png");
+  depcroise1 = loadImage("depcroise1.png");  //Ici on associes les différents sprites importés plus haut à des variables d'images
+  depcroise2 = loadImage("depcroise2.png");
+  depcroise3 = loadImage("depcroise3.png");
+  depcroise4 = loadImage("depcroise4.png");
+  depcroiseg1 = loadImage("depcroiseg1.png");  
+  depcroiseg2 = loadImage("depcroiseg2.png");
+  depcroiseg3 = loadImage("depcroiseg3.png");
+  depcroiseg4 = loadImage("depcroiseg4.png");
   comb1 = loadImage("comb1.png");
   comb2 = loadImage("comb2.png");
   comb3 = loadImage("comb3.png");
@@ -72,8 +73,8 @@ void setup() {
   combg3 = loadImage("combg3.png");
   combg4 = loadImage("combg4.png");
   combg5 = loadImage("combg5.png");
-  croisestop = loadImage("croiséstop.png");
-  croisestopg = loadImage("croiséstopg.png");
+  croisestop = loadImage("croisestop.png");
+  croisestopg = loadImage("croisestopg.png");
 
   
 
@@ -94,9 +95,7 @@ void draw() {
   fill(0);
   text(sold1.life, 10, 100);
   text(sol1.life, 700, 100);
-  
-  
-
+  BDV();
   
   
   
@@ -123,9 +122,20 @@ void draw() {
 }
 
 
+void BDV() { //barre de vie
 
+  noStroke();
+  drawWidth = sold1.life / sold1.maxlife ;
+  rect(50, 720, drawWidth*600, 40);
+  stroke(0);
+  noFill();
+  rect(50, 720, 600, 40);
 
-
+   
+  noStroke();
+  drawWidth2 = 1-(sol1.life/sol1.maxlife) ;
+  rect(200, 720, (1-drawWidth2)*600, 40);
+}
 
 
 
@@ -137,6 +147,7 @@ int y;
 int i=0;
 int f=1;
 int life;
+float maxlife;
 int armor;    //armure
 int as;    //attaque speed
 int dmg;
@@ -157,6 +168,7 @@ boolean regen=false;
     nbrg=nbrg+1;
     dmg=nouvdmg;    //caractéristiques
     life=nouvlife;
+    maxlife=nouvlife;
     armor=nouvarmor;
     as=nouvas;
     ls=nouvls;
@@ -299,6 +311,7 @@ int y;
 int i=0;    //compteur du temps
 int f=1;    //compteur de frames
 int life;    //vie
+float maxlife; 
 int armor;    //armor
 int as;
 int dmg;
@@ -320,6 +333,7 @@ boolean regen=false;
     nbrd=nbrd+1;
     dmg=nouvdmg;    //caractéristiques
     life=nouvlife;
+    maxlife=nouvlife;
     armor=nouvarmor;
     as=nouvas;
     ls=nouvls;
