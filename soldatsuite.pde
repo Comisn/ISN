@@ -93,8 +93,6 @@ void setup() {
 void draw() {
   background(255,255,255);
   fill(0);
-  text(sold1.life, 10, 100);
-  text(sol1.life, 700, 100);
   BDV();
   
   
@@ -124,18 +122,29 @@ void draw() {
 
 void BDV() { //barre de vie
 
-  noStroke();
-  drawWidth = sold1.life / sold1.maxlife ;
-  rect(50, 720, drawWidth*600, 40);
+
+  if(sold1.life>0){
+    noStroke();
+    drawWidth = sold1.life / sold1.maxlife ;
+    fill(198, 8, 0);
+    rect(50, 720, drawWidth*600, 30);
+    
+   }
   stroke(0);
   noFill();
-  rect(50, 720, 600, 40);
+  rect(50, 720, 600, 30); 
 
-   
-  noStroke();
-  drawWidth2 = 1-(sol1.life/sol1.maxlife) ;
-  rect(200, 720, (1-drawWidth2)*600, 40);
+  if(sol1.life>0){
+    noStroke();
+    drawWidth2 = sol1.life / sol1.maxlife ;
+    fill(198, 8, 0);
+    rect(1350, 720, 1-(drawWidth2)*600, 30);
+    }
+  stroke(0);
+  noFill();
+  rect(750, 720, 600, 30);
 }
+
 
 
 
@@ -158,8 +167,8 @@ int dgtg;    //variable pour les dégats exportés xD
 boolean vie=true;
 boolean barb=false;
 boolean regen=false;
-
-
+boolean croise=false;
+boolean pala=false;
 
  
   sold1(int nouvX, int nouvY, int nouvdmg, int nouvlife, int nouvarmor, int nouvas, int nouvls) {    //on permet d'entrer les différentes variables lors de la création de l'objet
@@ -199,10 +208,22 @@ boolean regen=false;
     if (barb) {      //effet barbare: as augmente quand + de dmg
     as=15-(life/20);  
     }
-    if (regen&&i==1) {      //effet démon: regen de vie
+    if (regen&&i==1) {      //effet démon: regenération de vie
     life=life+2;  
     }
+   
+    if (croise){ //effet croisé: premier coup puissant
+      if(sol1.life==sol1.maxlife){
+        dmg=52; } else{
+        dmg=26; }     
+    }
     
+    if (pala){
+      if(sol1.life<35){
+        dmg=150; } else{
+        dmg=25; }
+    }
+   
     if(f<1){
     image(croisestopg,x,y);  
     }
@@ -306,25 +327,27 @@ boolean regen=false;
 
 
 class sol1 {
-int x;
-int y;
-int i=0;    //compteur du temps
-int f=1;    //compteur de frames
-int life;    //vie
-float maxlife; 
-int armor;    //armor
-int as;
-int dmg;
-int ls;
-int atk;
-color c=color(255,200,10);
-int nbrd;
-int dgtd;
-boolean vie=true;
-boolean barb=false;
-boolean regen=false;
-
-
+int x ;
+int y ;
+int i=0 ;    //compteur du temps
+int f=1 ;    //compteur de frames
+int life ;    //vie
+float maxlife ; 
+int armor ;    //armor
+int as ;
+int dmg ;
+int ls ;
+int atk ;
+int shield=0 ;
+color c=color(255,200,10) ;
+int nbrd ;
+int dgtd ;
+boolean vie=true ;
+boolean barb=false ;
+boolean regen=false ;
+boolean croise=false ;
+boolean pala=false ;
+boolean tispa=false ;
 
  
   sol1(int nouvX, int nouvY, int nouvdmg, int nouvlife, int nouvarmor, int nouvas, int nouvls) {
@@ -368,6 +391,17 @@ boolean regen=false;
     if (regen&&i==1) {      //effet démon: regen de vie
     life=life+2;  
     }
+    
+    if (croise){ //effeet croisé: premier coup puissant
+      if(sold1.life==sold1.maxlife){
+        dmg=52; } else{
+        dmg=26; }     
+    }
+    if (pala){ //effet paladin: dernier coup puissant
+      if(sold1.life<35){
+        dmg=150; }   
+    }
+
     
     if(f<1){
     image(croisestop,x,y);  
@@ -414,6 +448,7 @@ boolean regen=false;
     }
     
     if(sold1.dgtg>1) {    //réception des dégats
+    
     life=life-(sold1.dgtg-armor);    
     }
   }
@@ -469,8 +504,8 @@ boolean regen=false;
 
 void choixg() {    //fonction de choix et d'association des caractéristiques aux différents personnages
   if (classeg == "Croisé") {
-    sol1 = new sol1(spawnd,floor,26,120,7,15,0);  
-    //ajouter burst et achèvement
+    sol1 = new sol1(spawnd,floor,26,120,6,15,0);  
+    sol1.croise = true;
   }
   if (classeg == "Shaco") {
     
@@ -484,11 +519,11 @@ void choixg() {    //fonction de choix et d'association des caractéristiques au
   }
   if (classeg == "Spartiate") {
     sol1 = new sol1(spawnd,floor,30,140,8,14,0);
-    //ajouter un shield
+    sol1.tispa = true;
   }
   if (classeg == "Paladin") {
     sol1 = new sol1(spawnd,floor,25,150,15,15,0);
-    
+    sol1.pala = true;
   }
   if (classeg == "Démon") {
     sol1 = new sol1(spawnd,floor,24,200,9,15,0);
@@ -500,6 +535,6 @@ void choixg() {    //fonction de choix et d'association des caractéristiques au
     
   }
   if (classeg == "Assassin") {
-    sol1 = new sol1(spawnd,floor,42,100,5,13,0);
+    sol1 = new sol1(spawnd,floor,42,100,5,12,0);
   }
 }
