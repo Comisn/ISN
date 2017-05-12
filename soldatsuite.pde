@@ -20,6 +20,9 @@ PImage depcroiseg4;
 PImage croisestop;    //skin croisé quand il bouge pas
 PImage croisestopg;
 
+PImage fond;
+
+
 String classeg;
 String classed;
 
@@ -46,8 +49,24 @@ int spawng=50;
 int spawnd=950;
 int z;
 
+int interd;
+int interg;
+
 sol1 sol1 = new sol1(spawnd,floor,25,150,7,15,5);    //création des objets sans caractéristiques:  dmg,life,armor,as,lifesteal
 sold1 sold1 = new sold1(spawng,floor,25,150,7,15,0);
+
+bouton bouton1= new bouton(100,50,1); //classe pour la création des boutons
+bouton bouton2= new bouton(100,125,2); //classe pour la création des boutons
+bouton bouton3= new bouton(100,200,3); //classe pour la création des boutons
+bouton bouton4= new bouton(200,50,4); //classe pour la création des boutons
+bouton bouton5= new bouton(200,125,5); //classe pour la création des boutons
+bouton bouton6= new bouton(200,200,6); //classe pour la création des boutons
+bouton bouton7= new bouton(1100,50,7); //classe pour la création des boutons
+bouton bouton8= new bouton(1100,125,8); //classe pour la création des boutons
+bouton bouton9= new bouton(1100,200,9); //classe pour la création des boutons
+bouton bouton10= new bouton(1200,50,10); //classe pour la création des boutons
+bouton bouton11= new bouton(1200,125,11); //classe pour la création des boutons
+bouton bouton12= new bouton(1200,200,12); //classe pour la création des boutons
 
 
 void setup() {
@@ -76,26 +95,34 @@ void setup() {
   croisestop = loadImage("croisestop.png");
   croisestopg = loadImage("croisestopg.png");
 
-  
+  fond = loadImage("arena.jpg");
+  image(fond,0,0);
+ 
+  smooth();
 
-
-
-
-
-  
 }
 
 
 
-
+ // pour que les rectangles apparaissent
 
 
 void draw() {
-  background(255,255,255);
-  fill(0);
+  fond.resize(1400,800);//pour que l'image remplisse entièrement le fond
+  background(fond);
   BDV();
-  
-  
+  bouton1.display(); 
+  bouton2.display();
+  bouton3.display(); 
+  bouton4.display();
+  bouton5.display(); 
+  bouton6.display();
+  bouton7.display(); 
+  bouton8.display();
+  bouton9.display(); 
+  bouton10.display();
+  bouton11.display(); 
+  bouton12.display();
   
   if(mouseButton == LEFT) { //invoquer le soldats avec la souris
    soldbrain1g = true;
@@ -110,19 +137,13 @@ void draw() {
   if(soldbrain1d == true) {
     sol1.cerveau();
   }
-  
-  
-  
-  
 
-  
-  
 }
 
 
 void BDV() { //barre de vie
 
-
+  noStroke();
   if(sold1.life>0){
     noStroke();
     drawWidth = sold1.life / sold1.maxlife ;
@@ -131,6 +152,7 @@ void BDV() { //barre de vie
     
    }
   stroke(0);
+  strokeWeight(1);
   noFill();
   rect(50, 720, 600, 30); 
 
@@ -141,6 +163,7 @@ void BDV() { //barre de vie
     rect(1350, 720, 1-(drawWidth2)*600, 30);
     }
   stroke(0);
+  strokeWeight(1);
   noFill();
   rect(750, 720, 600, 30);
 }
@@ -279,7 +302,7 @@ boolean pala=false;
   
   
   void marche() {    //action de déplacement
-    x=x+1;    //déplacement
+    x=x+2;    //déplacement
     positionsg[nbrg] = x;    //attribution de sa position au tableau pour qu'il puisse être détecté
 
     
@@ -297,7 +320,7 @@ boolean pala=false;
     }
     
     
-    if(i<13){
+    if(i<7){
     i=i+1;
     } else {
     i=0;
@@ -458,7 +481,7 @@ boolean tispa=false ;
   
   
   void marche() {    //déplacement
-    x=x-1;    
+    x=x-2;    
     positionsd[nbrd] = x;    //attribution de sa position au tableau pour qu'il puisse être détecté
 
     
@@ -476,7 +499,7 @@ boolean tispa=false ;
     }
     
     
-    if(i<13){
+    if(i<7){
     i=i+1;
     } else {
     i=0;
@@ -507,16 +530,12 @@ void choixg() {    //fonction de choix et d'association des caractéristiques au
     sol1 = new sol1(spawnd,floor,26,120,6,15,0);  
     sol1.croise = true;
   }
-  if (classeg == "Shaco") {
-    
-  }
+  
   if (classeg == "Barbare") {
     sol1 = new sol1(spawnd,floor,26,120,7,15,7);
     sol1.barb = true;
   }
-  if (classeg == "Myrmidon") {
-    
-  }
+
   if (classeg == "Spartiate") {
     sol1 = new sol1(spawnd,floor,30,140,8,14,0);
     sol1.tispa = true;
@@ -534,7 +553,71 @@ void choixg() {    //fonction de choix et d'association des caractéristiques au
     sol1 = new sol1(spawnd,floor,32,100,5,14,12);
     
   }
-  if (classeg == "Assassin") {
-    sol1 = new sol1(spawnd,floor,42,100,5,12,0);
-  }
+
 }
+
+
+class bouton { //déclaration des variables
+int x;
+int y;
+int w = 50;
+int l = 50;
+int c;
+
+
+  bouton ( int newX, int newY, int newC) {
+  x = newX;
+  y = newY;
+  c = newC;
+  }
+
+ void display() {
+
+   
+   
+   
+   if((mousePressed == true)&&(mouseX<x+50)&&(mouseX>x)&&(mouseY<y+50)&&(mouseY>y)&&(c>6)) {
+      interd = c;
+      strokeWeight(3);
+      stroke(255); }else {
+      noStroke();
+      }
+
+ if(keyPressed == true){
+     if((key == 'a')&&(c==1)){
+       interg = c;
+       strokeWeight(3);
+       stroke(255); }else {
+     
+       if((key == 'q')&&(c==2)){
+       interg = c; 
+       strokeWeight(3);
+       stroke(255); }else {
+      
+       if((key == 'w')&&(c==3)){
+       interg = c;
+       strokeWeight(3);
+       stroke(255); }else {
+    
+       if((key == 'z')&&(c==4)){
+       interg = c;
+       strokeWeight(3);
+       stroke(255); }else {
+      
+       if((key == 's')&&(c==5)){
+       interg = c;
+       strokeWeight(3);
+       stroke(255); }else {
+     
+       if((key == 'x')&&(c==6)){
+       interg = c;
+       strokeWeight(3);
+       stroke(255); }else {
+       }}}}}}
+       }
+       
+    fill(0);
+    rect(x,y,w,l);
+  
+  }
+ }  
